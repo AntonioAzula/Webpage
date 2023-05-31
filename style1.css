@@ -1,0 +1,68 @@
+
+h5{
+    font-family:Arial, Helvetica, sans-serif;
+    white-space:pre-line;
+}
+body {
+    background-color: rgb(252, 251, 197);
+}
+h1 { 
+    color: rgb(0, 0, 0);
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.comment-box {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+    .comment-box textarea {
+        height: 150px; 
+        width: 100%; 
+        resize: vertical;
+      }
+  
+  .comment-list {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    height: 300px; 
+    overflow-y: auto;
+  }
+  
+  .comment {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  
+  .comment-date {
+    font-size: 12px;
+    color: #888;
+  }
+  
+  .comment-list hr {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid black;
+  }
+
+  .bottom-line {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+  }
+  
+  .bottom-line span {
+    margin-right: 50px;
+  }

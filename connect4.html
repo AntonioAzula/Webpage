@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="dropdown.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+  </head>
+  <body>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="#">My Website</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="Index.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="persInf.html">About Me</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="projectsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              My Projects
+            </a>
+            <div class="dropdown-menu" aria-labelledby="projectsDropdown">
+              <a class="dropdown-item" href="calculator.html">Calculator</a>
+              <a class="dropdown-item" href="connect4.html">Connect Four</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contactInfo.html">Contact Me</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <h1 class="d-flex justify-content-center">Connect 4 </h1>
+    <h3>Here is the java code for a Connect 4 game for two players. Below is a short descroiption of how it works:</h3>
+    <h5>Connect 4 is a game of 2 players where the goal is connecting 4 four of your chips (Xs or 0s) vertically, horizontally or diagonally. 
+        With each turn, the player chooses a column to drop one of his chips into the 6 by 7 board until connecting four. 
+        Each time a column is selected, a chip is dropped, falling above the last cipped dropped in the line. 
+        If there are four chips of the same type in a line, the game end. </h5>
+    <h6>
+        import java.util.Scanner;
+        public class Connect4
+        {
+            static boolean boardFull = false;
+            static int width = 7;
+            static int height = 6; //characteristics of the board
+            static int counter = 1; //counter for chips of the same value
+            static boolean playable = true; //a boolean that verifies the game can be played or if someone has won
+            static Scanner input = new Scanner(System.in);
+            static int selection1;
+            static int selection2;
+            // all varaibles are static since they don't have a return
+            public static char[][] board = new char[height][width]; // creates a 7 by 6 2dArray
+            public static void board() // the method creates a gameboard with a prefixed simbol for all slots
+            {
+                for (int i = 0; i < height; i++)
+                {
+                    System.out.println();
+                    for (int j = 0; j < width; j++)
+                    {
+                        board[i][j] = '*';
+                        System.out.print(board[i][j]);
+                    }
+                }
+            }
+        
+            public static void modBoard() //The method prints out the board after being modified by the player (1 or 2)
+            {
+                for (int i = 0; i < height; i++)
+                {
+                    System.out.println();
+                    for (int j = 0; j < width; j++)
+                    {
+                        System.out.print(board[i][j]);
+                    }
+                }
+            }
+        
+            public static void player1turn() //lets player 1 play
+            {
+                System.out.println("Player 1 (X) select column 0-6");
+                selection1 = input.nextInt();//player 1 chooses column to drop his chip (X)
+                while (selection1 >= width || selection1<0) //verifies the column selected exist
+                {
+                    System.out.println("Out of bounds, choose a number between 0 and 6");
+                    selection1 = input.nextInt(); //lets the player choose again if the column doesn't exist
+                }
+                checkStupidity(); // at the end
+                for (int i = 0; i < board.length ; i++) // if the column exists, this analyses all the slots in it
+                {
+                    if (board[i][selection1] == '*') //checks the slot is empty
+                    {
+                        if (i == board.length - 1) // if the last slot (the first from bottom to top) is still empty, and changes the value if so
+                        {
+                            board[i][selection1] = 'X';
+                        }
+                        else if (board[i + 1][selection1] != '*' && i < board.length - 1) // if the last value, except from the lowest, is empty or not, and changes the values if it is empty
+                        {
+                            board[i][selection1] = 'X';
+                        }
+                    }
+                }
+        
+            }
+        
+            public static void player2turn() //same characteristics as player1turn, just for player two
+            {
+                System.out.println("Player 2 (0) select column 0-6");
+                selection2 = input.nextInt();//player 1 chooses column to drop his chip (0)
+                while (selection2 >= width || selection2 < 0)
+                {
+                    System.out.println("Out of bounds, choose a number between 0 and 6");
+                    selection2 = input.nextInt();
+                }
+                checkStupidity2();
+                for (int i = 0; i < board.length; i++)
+                {
+                    if (board[i][selection2] == '*')
+                    {
+                        if (i == board.length - 1)
+                        {
+                            board[i][selection2] = '0';
+                        }
+                        else if (board[i + 1][selection2] != '*')
+                        {
+                            board[i][selection2] = '0';
+                        }
+                    }
+                }
+        
+            }
+        
+            public static void evalVertical() //this method evaluates if there are four chips of the same value in a vertical line
+            {
+                for (int j = 0; j < board[0].length && playable; j++)
+                {
+                    for (int i = height - 1; i >= 0  && playable; i --) //analyses all slots in the board, checks all rows from one column and then changes column (from bottom to top)
+                    {
+                        if (board[i][j] == 'X') //checks if the slot belongs to player 1
+                        {
+                            for (int I = i - 1 ; I >= 0 && board[I][j] == 'X' && playable; I--) //checks if the next slot (above) is also from player 1
+                            {
+                                counter += 1; //adds one chip to the counter
+                                if (counter == 4) //when the amount of consecutive chips equals 4, player one wins
+                                {
+                                    System.out.println("Player 1 wins");
+                                    playable = false; //game ends
+                                }
+                            }
+                            counter = 1; //resets the counter in case the condition isn't met
+                        }
+                        else if (board[i][j] == '0') //repeats same process for player1 if condition isn't met
+                        {
+                            for (int I = i - 1 ;I >= 0 && board[I][j] == '0' && playable; I--)
+                            {
+                                counter += 1;
+                                if (counter == 4)
+                                {
+                                    System.out.println("Player 2 wins");
+                                    playable = false;
+                                }
+                            }
+                            counter = 1;
+                        }
+                    }
+                }
+            }
+        
+            public static void evalHorizontal() //this method evaluates if there are four chips of the same value in a horizontal line
+            {
+                for (int i = height -1 ; i >=0  && playable; i--)
+                {
+                    for (int j = 0 ; j < board[0].length && playable; j ++) //analyses all slots in the board, checks all columns from one row and then changes row (from left to right)
+                    {
+                        if (board[i][j] == 'X') //checks if the slot belongs to player 1
+                        {
+                            for (int J = j +1 ; J < width && board[i][J] == 'X' && playable; J++) //checks if the next slot (above) is also from player 1
+                            {
+                                counter += 1; //adds one chip to the counter
+                                if (counter == 4) //when the amount of consecutive chips equals 4, player one wins
+                                {
+                                    System.out.println("Player 1 wins");
+                                    playable = false; //game ends
+                                }
+                            }
+                            counter = 1; //resets the counter in case the condition isn't met
+                        }
+                        else if (board[i][j] == '0') //same process as player 1 if condition isn't met
+                        {
+                            for (int J = j + 1 ; J < width && board[i][J] == '0'  && playable; J++)
+                            {
+                                counter += 1;
+                                if (counter == 4)
+                                {
+                                    System.out.println("Player 2 wins");
+                                    playable = false;
+                                }
+                            }
+                            counter = 1;
+                        }
+                    }
+                }
+            }
+        
+            public static void evalUpRigth() //this method evaluates if there are four chips of the same value in a / line
+            {
+                for (int i = height -1 ; i >=0  && playable; i--)
+                {
+                    for (int j = 0 ; j < board[0].length && playable; j ++) //analyses all slots in the board, checks all columns from one row and then changes row (from left to right)
+                    {
+                        if (board[i][j] == 'X') //checks if the slot belongs to player 1
+                        {
+                            for (int J = j + 1, I = i - 1 ; J < width && I >= 0 && board[I][J] == 'X' && playable; J++, I--) //checks if the next slot (above and right) is also from player 1
+                            {
+                                counter += 1; //adds one chip to the counter
+                                if (counter == 4) //when the amount of consecutive chips equals 4, player one wins
+                                {
+                                    System.out.println("Player 1 wins");
+                                    playable = false; //game ends
+                                }
+                            }
+                            counter = 1; //resets the counter in case the condition isn't met
+                        }
+                        else if (board[i][j] == '0') //same process as player 1 if condition isn't met
+                        {
+                            for (int J = j + 1, I = i - 1 ; J < width && I >= 0 && board[I][J] == '0'  && playable; J++, I--)
+                            {
+                                counter += 1;
+                                if (counter == 4)
+                                {
+                                    System.out.println("Player 2 wins");
+                                    playable = false;
+                                }
+                            }
+                            counter = 1;
+                        }
+                    }
+                }
+            }
+        
+            public static void evalDownRigth() //this method evaluates if there are four chips of the same value in a \ line
+            {
+                for (int i = height -1 ; i >=0 && playable; i--)
+                {
+                    for (int j = width - 1 ; j >= 0 && playable; j --) //analyses all slots in the board, checks all columns from one row and then changes row (from left to right)
+                    {
+                        if (board[i][j] == 'X') //checks if the slot belongs to player 1//analyses all slots in the board, checks all columns from one row and then changes row (from left to right)
+                        {
+                            for (int J = j -1, I = i -1 ; J >= 0  && I >= 0 && board[I][J] == 'X' && playable; J--, I--) //checks if the next slot (above and left) is also from player 1
+                            {
+                                counter += 1; //adds one chip to the counter
+                                if (counter == 4) //when the amount of consecutive chips equals 4, player one wins
+                                {
+                                    System.out.println("Player 1 wins");
+                                    playable = false; //game ends
+                                }
+                            }
+                            counter = 1; //resets the counter in case the condition isn't met
+                        }
+                        else if (board[i][j] == '0') //same process as player 1 if condition isn't met
+                        {
+                            for (int J = j - 1, I = i - 1 ; J >= 0 && I >= 0 && board[I][J] == '0'  && playable; J--, I--)
+                            {
+                                counter += 1;
+                                if (counter == 4)
+                                {
+                                    System.out.println("Player 2 wins");
+                                    playable = false;
+                                }
+                            }
+                            counter = 1;
+                        }
+                    }
+                }
+            }
+            
+            public static void checkStupidity() // checks if the column selected is already full (player 1)
+            {
+                    while (board[0][selection1] != '*') //in case column is full, lets player repeat
+                    {
+                        System.out.println("The column is full, please choose another column");
+                        selection1 = input.nextInt();
+                    }
+            }
+            public static void checkStupidity2() // checks if the column selected is already full (player 2)
+            {
+                while (board[0][selection2] != '*') //in case column is full, lets player repeat
+                {
+                    System.out.println("The column is full, please choose another column");
+                    selection2 = input.nextInt();
+                }
+            }
+        
+            public static void checkFull()
+            {
+                int counter2 = 0;
+                for (int j = 0; j < board[0].length; j++)
+                {
+                    if (board[0][j] != '*')
+                    {
+                        counter2 +=1;
+                    }
+                    if (counter2 == 7)
+                    {
+                        System.out.println("It's a tie, no one wins");
+                        boardFull = true;
+                    }
+                }
+                counter2 = 0;
+            }
+            public static void main(String[] args)
+            { //main method that calls all methods for the game to work
+                board();
+                System.out.println();
+                do
+                {
+                    player1turn(); //player one plays
+                    modBoard(); //board is printed with modified slot
+                    System.out.println();
+                    checkFull();
+                    if (boardFull)
+                    {
+                        break;
+                    }
+                    evalVertical();
+                    evalHorizontal();
+                    evalUpRigth();
+                    evalDownRigth();
+                    //evaluates all possible winning cases
+                    if (!playable) //if player 1 wins, yhe loop is broken with !=playable and player 2 doens't play
+                    {
+                        break;
+                    }
+                    player2turn();//all same as player one
+                    modBoard();
+                    System.out.println();
+                    checkFull();
+                    if (boardFull)
+                    {
+                        break;
+                    }
+                    evalVertical();
+                    evalHorizontal();
+                    evalUpRigth();
+                    evalDownRigth();
+                    // if player 2 wins, playable is false and the loop is broken
+                }
+                while (playable); //is do while to let the game print the board from the start but check if the game is still 'playable'
+            }
+        }</h6>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <div class="bottom-line">
+        <span>&#x1F4BB;</span>
+        <span>&#x1F3AE;</span>
+        <span>&#x1F3A7;</span>
+        <span>&#x1F3B3;</span>
+        <span>&#x26F3;</span>
+      </div>
+  </body>
+</html>
